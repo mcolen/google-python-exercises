@@ -40,7 +40,12 @@ def extract_names(filename):
   followed by the name-rank strings in alphabetical order.
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
-  # +++your code here+++
+  f = open(filename, 'r')
+  for line in f:
+    match = re.match(r'^<h3.+Popularity in (\d+)</h3>$', line)
+    if match:
+      print match.group(1)
+  f.close()
   return
 
 
