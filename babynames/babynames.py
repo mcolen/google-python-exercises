@@ -41,11 +41,11 @@ def extract_names(filename):
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
   f = open(filename, 'r')
-  for line in f:
-    match = re.match(r'^<h3.+Popularity in (\d+)</h3>$', line)
-    if match:
-      print match.group(1)
+  text = f.read()
   f.close()
+  match = re.search(r'<h3.*>Popularity in (\d+)</h3>', text)
+  year = match.group(1)
+  print year
   return
 
 
