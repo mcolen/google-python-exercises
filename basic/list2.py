@@ -36,8 +36,8 @@ def linear_merge(list1, list2):
     else:
       merged.append(list2[i2])
       i2 += 1
-  merged += list1[i1:]
-  merged += list2[i2:]
+  merged.extend(list1[i1:])
+  merged.extend(list2[i2:])
   return merged
 
 
