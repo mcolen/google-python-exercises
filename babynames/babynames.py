@@ -43,7 +43,7 @@ def extract_names(filename):
   text = f.read()
   f.close()
 
-  match = re.search(r'<h3.*>Popularity in (\d+)</h3>', text)
+  match = re.search(r'<h\d.*>Popularity in (\d+)</h\d>', text)
   year = match.group(1)
 
   tuples = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', text)
