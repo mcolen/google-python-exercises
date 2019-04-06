@@ -85,7 +85,7 @@ def main():
       for line in list: f.write(line + '\n')
       f.close()
     else:
-      for line in list: print(line)
+      print '\n'.join(list)
 
 if __name__ == '__main__':
   main()
