@@ -45,7 +45,14 @@ def extract_names(filename):
   match = re.search(r'<h3.*>Popularity in (\d+)</h3>', text)
   year = match.group(1)
   tuples = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', text)
-  print tuples
+  dict = {}
+  for tuple in tuples:
+    rank, male, female = tuple
+    if (male not in dict) or (rank < dict[male]):
+      dict[male] = rank
+    if (female not in dict) or (rank < dict[female]):
+      dict[female] = rank
+  print dict
   sys.exit(0)
   return
 
