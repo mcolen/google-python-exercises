@@ -15,10 +15,23 @@ import commands
 """Copy Special exercise
 """
 
-# +++your code here+++
-# Write functions and modify main() to call them
+def get_special_paths(dir):
+  list = os.listdir(dir)
+  return [os.path.abspath(os.path.join(dir, name)) for name in list if re.search(r'__\w+__', name)]
 
+def copy_to(paths, dir):
+  os.makedirs(dir)
+  for path in paths:
+    shutil.copy(path, dir)
 
+def zip_to(paths, zippath):
+  command = 'zip -j ' + zippath + ' ' + ' '.join(paths)
+  print 'Command I\'m goin to do: ' + command
+  (status, output) = commands.getstatusoutput(command)
+  if status:
+    sys.stderr.write(output)
+    sys.exit(status)
+  print output
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -48,8 +61,17 @@ def main():
     print "error: must specify one or more dirs"
     sys.exit(1)
 
-  # +++your code here+++
-  # Call your functions
+  list = []
+  for dir in args:
+    list.extend(get_special_paths(dir))
+
+  if not tozip and not todir:
+    print '\n'.join(list)
+  if todir:
+    copy_to(list, todir)
+  if tozip:
+    zip_to(list, tozip)
+
   
 if __name__ == "__main__":
   main()
