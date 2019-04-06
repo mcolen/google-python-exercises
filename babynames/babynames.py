@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Copyright 2010 Google Inc.
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -47,6 +46,7 @@ def extract_names(filename):
   year = match.group(1)
   tuples = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', text)
   print tuples
+  sys.exit(0)
   return
 
 def main():
@@ -65,9 +65,16 @@ def main():
     summary = True
     del args[0]
 
-  # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
-  
+  for filename in args:
+    list = extract_names(filename)
+    if summary:
+      f = open(filename + '.summary', 'w');
+      for line in list: f.write(line + '\n')
+      f.close()
+    else:
+      for line in list: print(line)
+
 if __name__ == '__main__':
   main()
