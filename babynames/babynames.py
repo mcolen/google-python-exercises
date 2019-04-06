@@ -42,8 +42,10 @@ def extract_names(filename):
   f = open(filename, 'r')
   text = f.read()
   f.close()
+
   match = re.search(r'<h3.*>Popularity in (\d+)</h3>', text)
   year = match.group(1)
+
   tuples = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', text)
   dict = {}
   for tuple in tuples:
@@ -52,9 +54,11 @@ def extract_names(filename):
       dict[male] = rank
     if (female not in dict) or (rank < dict[female]):
       dict[female] = rank
-  print dict
-  sys.exit(0)
-  return
+
+  ret = [year]
+  for name in sorted(dict.keys()):
+    ret.append(name + ' ' + dict[name])
+  return ret
 
 def main():
   # This command-line parsing code is provided.
