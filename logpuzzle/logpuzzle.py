@@ -24,7 +24,7 @@ def read_urls(filename):
   extracting the hostname from the filename itself.
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
-  server = filename[filename.find('_') + 1:]
+  server = 'https://' + filename[filename.find('_') + 1:]
 
   f = open(filename, 'r')
   urls = []
@@ -46,7 +46,17 @@ def download_images(img_urls, dest_dir):
   with an img tag to show each local image file.
   Creates the directory if necessary.
   """
-  # +++your code here+++
+  os.makedirs(dest_dir)
+  html = "<verbatim><body>"
+  for i in range(len(img_urls)):
+    print("Retrieving...")
+    urllib.urlretrieve(img_urls[i], os.path.join(dest_dir, 'img' + str(i)))
+    html += '<img src="img%d">' % i
+  html += "</body></html>"
+
+  f = open(os.path.join(dest_dir, 'index.html'), 'w')
+  f.write(html)
+  f.close()
   
 
 def main():
